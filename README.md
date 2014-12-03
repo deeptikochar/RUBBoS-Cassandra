@@ -47,15 +47,19 @@ source ‘test.cql’
 
 
 Install Apache
+
 1.	Run the following command:
 sudo apt-get install apache2
+
 2.	To check if apache is correctly installed, go to 127.x.x.x from the browser and it should display the apache start page.
 
 Key points :
 1.	Apache’s webstore is by default at :
 	/var/www/html/
+
 2.	Apache’s conf file is located at:
 	/etc/apache2/apache2.conf
+
 3.	The complete configuration documentation is at:
 /usr/share/doc/apache2/README.Debian.gz
 
@@ -75,7 +79,9 @@ vi /var/www/html/info.php
 With the following contents:
 
 <?php
+
 	phpinfo();
+
 ?>
 
 Now, if you go to 127.0.0.1/info.php, it should give you a page with info about your php version.
