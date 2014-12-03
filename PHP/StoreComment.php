@@ -89,8 +89,6 @@
 
     // Add comment to database
     $now = date("Y-m-d H:i:s");
-//    $result = mysql_query("INSERT INTO $comment_table VALUES (NULL, $userId, $storyId, $parent, 0, 0, '$now', \"$subject\", \"$body\")", $link) or die("ERROR: Failed to insert new comment in database.");
-//    $result = mysql_query("UPDATE $comment_table SET childs=childs+1 WHERE id=$parent", $link) or die("ERROR: Failed to update parent childs in database.");
     $timeuuid = Uuid::now();
     $result = $link->query("INSERT INTO $comment_table (id, writer, story_id, parent, childs, rating, date, subject, comment) VALUES ($timeuuid, $userId, $storyId, $parent, 0, 0, '$now', '$subject', '$body');") or die ("ERROR: Failed to insert new comment in database.");
     $result = $link->query("SELECT count from comment_count where story_id=$storyId AND rating=0;");
@@ -118,7 +116,6 @@
 
     print("Your comment has been successfully stored in the $table database table<br>\n");
     
-//    mysql_close($link);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);

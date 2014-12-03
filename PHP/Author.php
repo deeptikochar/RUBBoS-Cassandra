@@ -35,17 +35,13 @@
     $access = 0;
     if (($nickname != null) && ($password != null))
     {
-//      $result = mysql_query("SELECT id,access FROM users WHERE nickname=\"$nickname\" AND password=\"$password\"", $link) or die("ERROR: Authentification query failed");
-	$result = $link->query("SELECT id, access from user_logins where nickname='$nickname' AND password='$password';") or die("ERROR: Authentification query failed");
-//      if (mysql_num_rows($result) != 0)
+      $result = $link->query("SELECT id, access from user_logins where nickname='$nickname' AND password='$password';");
       if (count($result) != 0)
       {
-//        $row = mysql_fetch_array($result);
 	  $row = $result[0];
           $userId = $row["id"];
           $access = $row["access"];
       }
-//      mysql_free_result($result);
     }
     if (($access == 0))
     {
@@ -58,8 +54,6 @@
       print("<p><center><h2>Which administrative task do you want to do ?</h2></center>\n".
             "<p><p><a href=\"/rubbos/ReviewStories.php?authorId=$userId\">Review submitted stories</a><br>\n");
     }
-
-//    mysql_close($link);
    
     $link->disconnect(); 
     printHTMLfooter($scriptName, $startTime);

@@ -31,11 +31,9 @@
     getDatabaseLink($link);
     printHTMLheader("RUBBoS: Comment moderation");
 
-    //$result = mysql_query("SELECT * FROM $comment_table WHERE id=$commentId", $link) or die("ERROR: Query failed");
     $result = $link->query("SELECT * FROM $comment_table WHERE id=$commentId ;") ;
     if (count($result) == 0)
-     die("<h3>ERROR: Sorry, but this comment does not exist.</h3><br>\n");
-    //$row = mysql_fetch_array($result);
+      die("<h3>ERROR: Sorry, but this comment does not exist.</h3><br>\n");
     $row = $result[0];
 
     print("<p><br><center><h2>Moderate a comment !</h2></center><br>\n<br><hr><br>");

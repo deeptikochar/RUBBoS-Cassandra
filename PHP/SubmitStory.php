@@ -17,9 +17,7 @@
           "<tr><td><b>Password</b><td><input type=text size=20 name=password>\n".
           "<tr><td><b>Story title</b><td><input type=text size=100 name=title>\n".
           "<tr><td><b>Category</b><td><SELECT name=category>\n");
-//    $result = mysql_query("SELECT * FROM categories", $link) or die("ERROR: Query failed");
     $result = $link->query("SELECT * FROM categories;") or die("ERROR: Query failed");
-//    while ($row = mysql_fetch_array($result))
     foreach ($result as $row)
     {
       print("<OPTION value=\"".$row["id"]."\">".$row["name"]."</OPTION>\n");
@@ -28,8 +26,6 @@
           "<TEXTAREA rows=\"20\" cols=\"80\" name=\"body\">Write your story here</TEXTAREA><br><p>\n".
           "<input type=submit value=\"Submit this story now!\"></center><p>\n");
 
-//    mysql_free_result($result);
-//    mysql_close($link);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);

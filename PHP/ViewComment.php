@@ -6,9 +6,7 @@
 // Display the nested comments
 function display_follow_up($cid, $level, $display, $filter, $link, $comment_table, $separator)
 {
-//  $follow = mysql_query("SELECT * FROM $comment_table WHERE parent=$cid AND rating>=$filter", $link) or die("ERROR: Query failed");
   $follow = $link->query("SELECT * FROM $comment_table WHERE parent=$cid AND rating>=$filter ALLOW FILTERING;") or die("ERROR: Query failed");
-//  while ($follow_row = mysql_fetch_array($follow))
   foreach ($follow as $follow_row)
   {
 	if (!$separator)
@@ -109,12 +107,9 @@ function display_follow_up($cid, $level, $display, $filter, $link, $comment_tabl
       $parent = '11111111-1111-1111-1111-111111111111';
     else
     {
-//      $result = mysql_query("SELECT parent FROM $comment_table WHERE id=$commentId", $link) or die("ERROR: Query failed");
       $result = $link->query("SELECT parent FROM $comment_table WHERE id=$commentId;");
-//      if (mysql_num_rows($result) == 0)
       if (count($result) == 0)
         die("<h3>ERROR: Sorry, but this comment does not exist.</h3><br>\n");
-//      $row = mysql_fetch_array($result);
       $row = $result[0];
       $parent = $row["parent"];
     }
@@ -127,10 +122,9 @@ function display_follow_up($cid, $level, $display, $filter, $link, $comment_tabl
           "<input type=hidden name=storyId value=$storyId>\n".
           "<input type=hidden name=comment_table value=$comment_table>\n".
           "<B>Filter :</B>&nbsp&nbsp<SELECT name=filter>\n");
-//    $count_result = mysql_query("SELECT rating, COUNT(rating) AS count FROM $comment_table WHERE story_id=$storyId GROUP BY rating ORDER BY rating", $link) or die("ERROR: Query failed");
     $count_result = $link->query("SELECT rating, count FROM comment_count WHERE story_id=$storyId ORDER BY rating;");
     $i = -1;
-//    while ($count_row = mysql_fetch_array($count_result))
+
     foreach ($count_result as $count_row)
     {
       while (($i < 6) && ($count_row["rating"] != $i))
@@ -169,9 +163,7 @@ function display_follow_up($cid, $level, $display, $filter, $link, $comment_tabl
     print("</SELECT>&nbsp&nbsp&nbsp&nbsp<input type=submit value=\"Refresh display\"></center><p>\n");          
 
     // Display the comments
-//$comment = mysql_query("SELECT * FROM $comment_table WHERE story_id=$storyId AND parent=0 AND rating>=$filter", $link) or die("ERROR: Query failed");
-$comment = $link->query("SELECT * from $comment_table WHERE story_id=$storyId AND parent=11111111-1111-1111-1111-111111111111 and rating>=$filter ALLOW FILTERING;");
-//    while ($comment_row = mysql_fetch_array($comment))
+    $comment = $link->query("SELECT * from $comment_table WHERE story_id=$storyId AND parent=11111111-1111-1111-1111-111111111111 and rating>=$filter ALLOW FILTERING;");
     foreach ($comment as $comment_row)
     {
 	  $separator=true;
@@ -187,7 +179,6 @@ $comment = $link->query("SELECT * from $comment_table WHERE story_id=$storyId AN
         display_follow_up($comment_row["id"], 1, $display, $filter, $link, $comment_table, $separator);
     }
 
-//    mysql_close($link);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);

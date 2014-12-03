@@ -45,18 +45,20 @@ source ‘test.cql’
 7.	A new keyspace ‘rubbos’ has been created and loaded with data. You can now close the shell by typing ‘exit’.
 
 
+
 Install Apache
-Run the following command:
+1.	Run the following command:
 sudo apt-get install apache2
 2.	To check if apache is correctly installed, go to 127.x.x.x from the browser and it should display the apache start page.
 
 Key points :
-Apache’s webstore is by default at :
+1.	Apache’s webstore is by default at :
 	/var/www/html/
 2.	Apache’s conf file is located at:
 	/etc/apache2/apache2.conf
 3.	The complete configuration documentation is at:
 /usr/share/doc/apache2/README.Debian.gz
+
 
 
 Install PHP5
@@ -71,10 +73,13 @@ service apache2 restart
 4.	To check if PHP is working with apache, create a file in the apache webstore:
 vi /var/www/html/info.php
 With the following contents:
-	<?php
-		phpinfo();
-	?>
+
+<?php
+	phpinfo();
+?>
+
 Now, if you go to 127.0.0.1/info.php, it should give you a page with info about your php version.
+
 
 
 Set up RUBBoS with php-cassandra-binary and UUID generator:
@@ -82,11 +87,9 @@ Set up RUBBoS with php-cassandra-binary and UUID generator:
 1.	Create a directory for your project in /var/www/html and go to it:
 mkdir /var/www/html/rubbos
 cd /var/www/html/rubbos
-
 2.	install composer.json for this location:
 sudo su
 curl -sS https://getcomposer.org/installer | php
-
 3.	Create a composer.json file:
 vi composer.json
 4.	To check if composer is working:
@@ -98,11 +101,11 @@ php composer.phar
        "duoshuo/uuid": "dev-master"
    }
 }
-
 6.	Install the composer content into the project:
 php composer.phar install
 7.	Copy the RUBBoS PHP files to /var/www/html/rubbos
 cp –r <path to RUBBoS directory> /RUBBoS/PHP /var/www/html/rubbos
+
 
 
 Run the benchmark
@@ -111,7 +114,6 @@ Run the benchmark
 sudo apt-get install sysstat
 sudo apt-get install open-jdk
 sudo apt-get install gnuplot
-
 2.	Go to the Client directory
 cd Client
 3.	Edit the rubbos.properties to put in the correct paths and clients and server addresses.
@@ -126,6 +128,7 @@ sudo make emulator                  (This command compiles and runs the emulator
 Sources:
 
 RUBBoS:
+
 http://jmob.ow2.org/rubbos.html
 https://github.com/michaelmior/RUBBoS
 

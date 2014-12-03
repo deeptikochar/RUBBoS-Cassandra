@@ -63,17 +63,13 @@
     $access = 0;
     if (($nickname != null) && ($password != null))
     {
-//      $result = mysql_query("SELECT id,access FROM users WHERE nickname=\"$nickname\" AND password=\"$password\"", $link) or die("ERROR: Authentication query failed");
       $result = $link->query("SELECT id, access FROM user_logins WHERE nickname='$nickname' AND password='$password';");
-//      if (mysql_num_rows($result) != 0)
       if (count($result) != 0)
       {
-//        $row = mysql_fetch_array($result);
 	$row = $result[0];
         $userId = $row["id"];
         $access = $row["access"];
       }
-//      mysql_free_result($result);
     }
 
     $table = "submissions";
@@ -96,7 +92,6 @@
     // Add story to database
     $now = date("Y-m-d H:i:s");
     
-//    $result = mysql_query("INSERT INTO $table VALUES (NULL, \"$title\", \"$body\", '$now', $userId, $category)", $link) or die("ERROR: Failed to insert new story in database.");
     $timeuuid = Uuid::now();
     $result = $link->query("INSERT INTO $table (id, title, body, date, writer, category) VALUES ($timeuuid, '$title', '$body', '$now', $userId, $category);") or die("ERROR: Failed to insert new story in database.");
 
@@ -107,7 +102,6 @@
 
     print("Your story has been successfully stored in the $table database table<br>\n");
     
-//    mysql_close($link);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);

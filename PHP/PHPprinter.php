@@ -48,10 +48,6 @@ function printError($scriptName, $startTime, $title, $error)
 
 function authenticate($nickname, $password, $link)
 {
-//  $result = mysql_query("SELECT id FROM users WHERE nickname=\"$nickname\" AND password=\"$password\"", $link) or die("ERROR: Authentification query failed");
-//  if (mysql_num_rows($result) == 0)
-//    return 0; // 0 is the anonymous user
-//  $row = mysql_fetch_array($result);
   $result = $link->query("SELECT id FROM user_logins WHERE nickname='$nickname' AND password='$password' ; ") or die("ERROR: Authentification query failed");
   if (count($result) == 0)
     return -1; // 0 is the anonymous user
@@ -66,7 +62,6 @@ function getUserName($uid, $link)
   if ($uid == null)
     return "Anonymous Coward";
   $user_query = $link->query("SELECT nickname FROM users WHERE id=$uid ;") or die("ERROR: getUserName query failed");
-   // $user_row = mysql_fetch_array($user_query);
   $user_row = $user_query[0];
   return $user_row["nickname"];
 }

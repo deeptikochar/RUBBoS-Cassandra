@@ -135,18 +135,15 @@
 */
       if ($type == 2)
       { // Look for stories of an author
-//        $result = mysql_query("SELECT stories.id, stories.title, stories.date, stories.writer FROM stories,users WHERE writer=users.id AND "." users.nickname LIKE '$search%'"." ORDER BY date DESC LIMIT ".$page*$nbOfStories.",$nbOfStories", $link) or die("ERROR: stories query failed");
         $result = $link->query("SELECT story_id FROM stories_users where nickname>='$search' AND nickname<'$search_end' LIMIT $nbOfStories ALLOW FILTERING;");
         $stories_table = "stories";
-//        if (mysql_num_rows($result) == 0)
+
         if (count($result) == 0)
         {
             $stories_table = "old_stories";
-//          $result = mysql_query("SELECT old_stories.id, old_stories.title, old_stories.date, old_stories.writer FROM old_stories,users WHERE writer=users.id AND "." users.nickname LIKE '$search%'"." ORDER BY date DESC LIMIT ".$page*$nbOfStories.",$nbOfStories", $link) or die("ERROR: old_stories query failed");
             $result = $link->query("SELECT story_id FROM old_stories_users where nickname>='$search' and nickname<'$search_end' LIMIT $nbOfStories ALLOW FILTERING;");    
         }
 
-//        if (mysql_num_rows($result) == 0)
         if (count($result) == 0)
         {
           if ($page == 0)
@@ -156,8 +153,6 @@
             print("<h2>Sorry, but there are no more stories available with author matching <i>$search</i>.</h2><br>\n");
             print("<p><CENTER>\n<a href=\"/PHP/Search.php?search=".urlencode($search)."&type=$type&page=".($page-1)."&nbOfStories=$nbOfStories\">Previous page</a>\n</CENTER>\n");
           }
-//          mysql_free_result($result);
-//          mysql_close($link);
           $link->disconnect();
           printHTMLfooter($scriptName, $startTime);
           exit();
@@ -169,7 +164,6 @@
       if ($type != 1)
       {
         // Print the story titles and author
-//        while ($row = mysql_fetch_array($result))
         foreach ($result as $row)
         {
           $username = getUserName($row["writer"], $link);
@@ -184,8 +178,6 @@
         print("<p><CENTER>\n<a href=\"/PHP/Search.php?search=".urlencode($search)."&type=$type&page=".($page-1)."&nbOfStories=$nbOfStories\">Previous page</a>\n&nbsp&nbsp&nbsp".
               "<a href=\"/PHP/Search.php?category=$search=".urlencode($search)."&type=$type&page=".($page+1)."&nbOfStories=$nbOfStories\">Next page</a>\n\n</CENTER>\n");
       
-//      mysql_free_result($result);
-//      mysql_close($link);  
       $link->disconnect();        
     } 
    

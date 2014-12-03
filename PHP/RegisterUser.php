@@ -65,28 +65,21 @@
     getDatabaseLink($link);
 
     // Check if the nick name already exists
-//    $nicknameResult = mysql_query("SELECT * FROM users WHERE nickname=\"$nickname\"", $link) or die("ERROR: Nickname query failed");
     $result = $link->query("SELECT * FROM user_logins WHERE nickname='".$nickname."';");
-//    if (mysql_num_rows($nicknameResult) > 0)
     if (count($result) > 0)
     {
       printError($scriptName, $startTime, "Register user", "The nickname you have choosen is already taken by someone else. Please choose a new nickname.<br>\n");
-//      mysql_free_result($nicknameResult);
       exit();
     }
-//    mysql_free_result($nicknameResult);
 
     // Add user to database
     $now = date("Y-m-d H:i:s");
-//    $result = mysql_query("INSERT INTO users VALUES (NULL, \"$firstname\", \"$lastname\", \"$nickname\", \"$password\", \"$email\", 0, 0, '$now')", $link) or die("ERROR: Failed to insert new user in database.");
     $timeuuid = Uuid::now();
     $result = $link->query("INSERT INTO users (id, firstname, lastname, nickname, password, email, rating, access, creation_date) VALUES ($timeuuid, '$firstname', '$lastname', '$nickname', '$password', '$email', 0, 0, '$now');") or die("ERROR: Failed to insert new user in database.");
 
     $result = $link->query("INSERT INTO user_logins (nickname, password, id, access) VALUES ('$nickname', '$password', $timeuuid, 0);") or die("ERROR: Failed to insert new user in database.");
-//    $result = mysql_query("SELECT * FROM users WHERE nickname=\"$nickname\"", $link) or die("ERROR: Query user failed");
     $result = $link->query("SELECT * FROM users WHERE id=$timeuuid;") or die("ERROR: Query user failed");
     $row = $result[0];
-//    $row = mysql_fetch_array($result);
 
     printHTMLheader("RUBBoS: Welcome to $nickname");
     print("<h2>Your registration has been processed successfully</h2><br>\n");
@@ -103,8 +96,6 @@
     print("Rating        :".$row["rating"]."<br>\n");
     print("Access        :".$row["access"]."<br>\n");
     
-//    mysql_free_result($result);
-//    mysql_close($link);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);

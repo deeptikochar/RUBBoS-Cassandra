@@ -48,10 +48,8 @@
     print("<br><h2>Stories in category $categoryName</h2><br>");
 
     getDatabaseLink($link);
-    //$result = mysql_query("SELECT * FROM stories WHERE category=$categoryId ORDER BY date DESC LIMIT ".$page*$nbOfStories.",$nbOfStories", $link) or die("ERROR: Query failed");
     $result = $link->query("SELECT * FROM stories WHERE category=$categoryId LIMIT $nbOfStories ;") or die("ERROR: Query failed");
 
-   // if (mysql_num_rows($result) == 0)
     if (count($result) == 0)
     {
       if ($page == 0)
@@ -62,14 +60,12 @@
         print("<p><CENTER>\n<a href=\"/PHP/BrowseStoriesByCategory.php?category=$categoryId".
               "&categoryName=".urlencode($categoryName)."&page=".($page-1)."&nbOfStories=$nbOfStories\">Previous page</a>\n</CENTER>\n");
       }
-     // mysql_free_result($result);
       $link->disconnect();
       printHTMLfooter($scriptName, $startTime);
       exit();
     }
 
     // Print the story titles and author
-    //while ($row = mysql_fetch_array($result))
     foreach($result as $row)
     {
       $username = getUserName($row["writer"], $link);
@@ -86,7 +82,6 @@
             "<a href=\"/rubbos/BrowseStoriesByCategory.php?category=$categoryId".
             "&categoryName=".urlencode($categoryName)."&page=".($page+1)."&nbOfStories=$nbOfStories\">Next page</a>\n\n</CENTER>\n");
 
-    //mysql_free_result($result);
     $link->disconnect();
     
     printHTMLfooter($scriptName, $startTime);
