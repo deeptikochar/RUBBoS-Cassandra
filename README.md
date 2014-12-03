@@ -8,10 +8,11 @@ Installation
 Install Cassandra
 
 1.	Gain root access
- sudo su
+sudo su
 2.	Check if Java is installed: 
 java -version
-If not, install the latest JDK : apt-get install open-jdk
+If not, install the latest JDK : 
+apt-get install open-jdk
 3.	Add DataStax to the repository:
 vi /etc/apt/sources.list
 Insert at the end: deb http://debian.datastax.com/community stable main
@@ -50,7 +51,6 @@ Install Apache
 
 1.	Run the following command:
 sudo apt-get install apache2
-
 2.	To check if apache is correctly installed, go to 127.x.x.x from the browser and it should display the apache start page.
 
 Key points :
